@@ -15,17 +15,10 @@ RUN pip install --upgrade pip && \
     pip install torch torchvision torchaudio --extra-index-url https://download.pytorch.org/whl/cu121 && \
     pip install -r requirements.txt
 
-# Clone ComfyUI-Manager
-RUN git clone https://github.com/ltdrdata/ComfyUI-Manager.git /ComfyUI/custom_nodes/ComfyUI-Manager
-
-# Clone CatVTON wrapper
-RUN git clone https://github.com/chflame163/ComfyUI_CatVTON_Wrapper.git /ComfyUI/custom_nodes/ComfyUI_CatVTON_Wrapper
-
-# Download and extract CatVTON content
-RUN mkdir -p /ComfyUI/models/CatVTON && \
-    wget -O /tmp/CatVTON.zip "https://storage.googleapis.com/vok01/Docker-save/CatVTON.zip" && \
-    unzip /tmp/CatVTON.zip -d /ComfyUI/models/CatVTON && \
-    rm /tmp/CatVTON.zip
+# Clone ComfyUI-Manager and other plugins directly into custom_nodes
+RUN git clone https://github.com/ltdrdata/ComfyUI-Manager.git /ComfyUI/custom_nodes/ComfyUI-Manager && \
+    git clone https://github.com/chflame163/ComfyUI_CatVTON_Wrapper.git /ComfyUI/custom_nodes/ComfyUI_CatVTON_Wrapper && \
+    git clone https://github.com/chflame163/ComfyUI_LayerStyle.git /ComfyUI/custom_nodes/ComfyUI_LayerStyle
 
 # Install additional dependencies for CatVTON
 RUN pip install opencv-python-headless
